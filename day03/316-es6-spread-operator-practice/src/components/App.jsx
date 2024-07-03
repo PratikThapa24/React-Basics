@@ -1,0 +1,48 @@
+import React from "react";
+
+function App() {
+  
+  const [formdata, setNewForm] = React.useState({ todo: "" });
+  const [todoList, setTodoList] = React.useState([]);
+
+  function handleChange(event) {
+    const { name, value } = event.target;
+    setNewForm((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  }
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    setTodoList((prevTodo) => [...prevTodo, formdata.todo])
+    setNewForm({ todo: "" });
+  }
+  return (
+    <div className="container">
+      <div className="heading">
+        <h1>To-Do List</h1>
+      </div>
+      <div className="form">
+        <input
+          onChange={handleChange}
+          type="text"
+          name="todo"
+          value={formdata.todo}
+        />
+        <button onClick={handleSubmit}>
+          <span>Add</span>
+        </button>
+      </div>
+      <div>
+        <ul>
+          {todoList.map((value, index) => (
+            <li key={index}>{value}</li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+}
+
+export default App;
