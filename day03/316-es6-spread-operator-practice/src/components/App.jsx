@@ -1,7 +1,7 @@
 import React from "react";
+import TodoItem from "./Todoitem";
 
 function App() {
-  
   const [formdata, setNewForm] = React.useState({ todo: "" });
   const [todoList, setTodoList] = React.useState([]);
 
@@ -15,9 +15,18 @@ function App() {
 
   function handleSubmit(event) {
     event.preventDefault();
-    setTodoList((prevTodo) => [...prevTodo, formdata.todo])
+    setTodoList((prevTodo) => [...prevTodo, formdata.todo]);
     setNewForm({ todo: "" });
   }
+
+  function deleteItem(id) {
+    setTodoList((prevTodo) =>
+      prevTodo.filter((item, index) => {
+        return index != id;
+      })
+    );
+  }
+
   return (
     <div className="container">
       <div className="heading">
@@ -37,7 +46,12 @@ function App() {
       <div>
         <ul>
           {todoList.map((value, index) => (
-            <li key={index}>{value}</li>
+            <TodoItem
+              key={index}
+              id={index}
+              value={value}
+              onChecked={deleteItem}
+            />
           ))}
         </ul>
       </div>
